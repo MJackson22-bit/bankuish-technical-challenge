@@ -59,6 +59,20 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
+    // ktor
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.json)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.serialization)
+
+    // okhttp
+    implementation(libs.okhttp.client)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
