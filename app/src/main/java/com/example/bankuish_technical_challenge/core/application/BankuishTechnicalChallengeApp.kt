@@ -5,6 +5,7 @@ import com.example.bankuish_technical_challenge.core.koinModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import org.koin.core.logger.Level
 
 class BankuishTechnicalChallengeApp : Application() {
@@ -15,5 +16,10 @@ class BankuishTechnicalChallengeApp : Application() {
             androidContext(this@BankuishTechnicalChallengeApp)
             modules(koinModules)
         }
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        stopKoin()
     }
 }

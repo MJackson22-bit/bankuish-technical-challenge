@@ -1,0 +1,6 @@
+package com.example.bankuish_technical_challenge.data.repository
+
+import com.example.bankuish_technical_challenge.domain.repository.IGithubRepoDetailsRepository
+
+class GithubRepoDetailsRepositoryImpl : IGithubRepoDetailsRepository {
+}
