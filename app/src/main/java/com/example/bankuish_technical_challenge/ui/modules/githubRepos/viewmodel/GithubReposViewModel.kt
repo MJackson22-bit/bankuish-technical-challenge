@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.bankuish_technical_challenge.data.ApiResponse
 import com.example.bankuish_technical_challenge.domain.repository.IGithubRepoRepository
+import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubReposEvent
 import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubReposState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,13 @@ class GithubReposViewModel(
     var state by mutableStateOf(GithubReposState())
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    fun getGithubRepos(query: String) {
+    fun onEvent(event: GithubReposEvent) {
+        when(event) {
+            is GithubReposEvent.FetchGithubRepos -> getGithubRepos(event.query)
+        }
+    }
+
+    private fun getGithubRepos(query: String) {
         state = state.copy(
             isLoading = true
         )

@@ -59,7 +59,7 @@ fun BTCRefreshableList(
 
             Icon(
                 modifier = Modifier.size(25.dp),
-                painter = painterResource(id = R.drawable.refresh_ic),
+                painter = painterResource(id = R.drawable.ic_refresh),
                 contentDescription = null,
                 tint = Color.White
             )

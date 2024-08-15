@@ -13,9 +13,8 @@ fun NavGraphBuilder.githubRepos(navController: NavHostController) {
     composable(AppTransition.GithubReposScreen.route) {
         val viewModel: GithubReposViewModel = koinViewModel()
         GithubReposView(
-            viewModel = viewModel
-        ) { repoId ->
-            navController.navigate(AppTransition.GithubRepoDetailsScreen.passId(repoId))
-        }
+            state = viewModel.state,
+            onEvent = viewModel::onEvent
+        )
     }
 }
