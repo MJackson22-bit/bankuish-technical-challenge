@@ -1,11 +1,17 @@
 package com.example.bankuish_technical_challenge.ui.modules.githubRepos.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +28,9 @@ import com.example.bankuish_technical_challenge.ui.components.loading.GithubRepo
 import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubReposEvent
 import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubReposState
 import com.example.bankuish_technical_challenge.ui.modules.githubRepos.viewmodel.GithubReposViewModel
+import com.example.bankuish_technical_challenge.ui.theme.BtcDarkBackground
 import com.example.bankuish_technical_challenge.ui.theme.BtcGrayBackground
+import com.example.bankuish_technical_challenge.ui.theme.BtcLightGrayTextColor
 import com.example.bankuish_technical_challenge.ui.theme.BtcShadowColor
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -49,21 +57,34 @@ fun GithubReposView(
     ) {
         BTCRefreshableList(
             isRefreshing = state.isRefreshing, onRefresh = {
-                onEvent(GithubReposEvent.FetchGithubRepos("kotlin"))
+                onEvent(GithubReposEvent.DidPullToRefresh("kotlin"))
             }) {
 
             BTCShimmeryView(
-                key = state.isLoading,
+                key = state.showShimmer,
                 shimmer = GithubReposShimmer
             ) {
+                LazyColumn {
+                    items(state.repos) {
+                        GithubRepoCellView(it)
 
-                BTCScrollableView {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    state.repos.forEach {
-                        GithubRepoCellView(item = it)
+                        // Handle pagination
+                        if(it == state.repos.last() && !state.isLoading) {
+                            onEvent(GithubReposEvent.FetchGithubRepos("kotlin"))
+                        }
+
+                        if (it == state.repos.last() && state.isLoading) {
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+
+                                CircularProgressIndicator(color = BtcLightGrayTextColor)
+                            }
+                        }
                     }
                 }
-
             }
         }
     }

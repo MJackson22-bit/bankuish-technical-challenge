@@ -11,6 +11,8 @@ import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubRep
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 class GithubReposViewModel(
     private val githubRepoRepository: IGithubRepoRepository
@@ -20,29 +22,50 @@ class GithubReposViewModel(
     private val scope = CoroutineScope(Dispatchers.IO)
 
     fun onEvent(event: GithubReposEvent) {
-        when(event) {
+        when (event) {
             is GithubReposEvent.FetchGithubRepos -> getGithubRepos(event.query)
+            is GithubReposEvent.DidPullToRefresh -> {
+                state = state.copy(
+                    currentPage = 1,
+                    isRefreshing = true
+                )
+                getGithubRepos(event.query)
+            }
         }
     }
 
     private fun getGithubRepos(query: String) {
-        state = state.copy(
-            isLoading = true
-        )
+        state = if (state.currentPage == 1 && state.repos.isEmpty()) {
+            state.copy(
+                showShimmer = true
+            )
+        } else {
+            state.copy(
+                isLoading = true
+            )
+        }
 
         scope.launch {
-            state = when(val result = githubRepoRepository.getGithubRepos(query, 20, 1)) {
+            state = when (val result =
+                githubRepoRepository.getGithubRepos(query, 20, state.currentPage)) {
                 is ApiResponse.Error -> {
                     state.copy(
                         isLoading = false,
-                        error = result.message
+                        error = result.message,
+                        showShimmer = false,
+                        isRefreshing = false
                     )
                 }
 
                 is ApiResponse.Success -> {
+                    val repos =
+                        if (state.isRefreshing) result.data.items else state.repos + result.data.items
                     state.copy(
+                        showShimmer = false,
                         isLoading = false,
-                        repos = result.data.items
+                        isRefreshing = false,
+                        repos = repos,
+                        currentPage = state.currentPage + 1
                     )
                 }
             }

@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.bankuish_technical_challenge.R
+import com.example.bankuish_technical_challenge.ui.theme.BtcDarkBackground
+import com.example.bankuish_technical_challenge.ui.theme.BtcGrayBackground
 
 @ExperimentalMaterialApi
 @Composable
@@ -53,7 +55,7 @@ fun BTCRefreshableList(
                 .pullRefreshIndicatorTransform(refreshState, true)
                 .rotate(rotation.value),
             shape = RoundedCornerShape(50.dp),
-            color = Color.White,
+            color = BtcGrayBackground,
             shadowElevation = if (refreshState.progress > 0 || isRefreshing) 20.dp else 0.dp,
         ) {
 
@@ -61,7 +63,7 @@ fun BTCRefreshableList(
                 modifier = Modifier.size(25.dp),
                 painter = painterResource(id = R.drawable.ic_refresh),
                 contentDescription = null,
-                tint = Color.White
+                tint = BtcDarkBackground
             )
         }
     }
