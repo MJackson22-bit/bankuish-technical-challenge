@@ -28,11 +28,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.bankuish_technical_challenge.R
 import com.example.bankuish_technical_challenge.domain.entity.githubRepo.GithubRepoItemEntity
-import com.example.bankuish_technical_challenge.domain.entity.githubRepo.GithubRepoOwnerEntity
-import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubReposEvent
 import com.example.bankuish_technical_challenge.ui.theme.BtcDarkBackground
-import com.example.bankuish_technical_challenge.utils.helpers.mtcLightText
-import com.example.bankuish_technical_challenge.utils.helpers.mtcText
+import com.example.bankuish_technical_challenge.utils.helpers.btcLightText
+import com.example.bankuish_technical_challenge.utils.helpers.btcText
 import com.example.bankuish_technical_challenge.utils.helpers.shadow
 
 @Composable
@@ -83,28 +81,28 @@ fun GithubRepoCellView(
 
                             Text(
                                 text = "Name",
-                                style = TextStyle.mtcText(14.sp)
+                                style = TextStyle.btcText(14.sp)
                             )
 
                             Spacer(modifier = Modifier.width(10.dp))
 
                             Text(
                                 text = item.name,
-                                style = TextStyle.mtcLightText()
+                                style = TextStyle.btcLightText()
                             )
                         }
 
                         Row {
                             Text(
                                 text = "Author",
-                                style = TextStyle.mtcText(14.sp)
+                                style = TextStyle.btcText(14.sp)
                             )
 
                             Spacer(modifier = Modifier.width(10.dp))
 
                             Text(
                                 text = item.owner.login,
-                                style = TextStyle.mtcLightText()
+                                style = TextStyle.btcLightText()
                             )
                         }
                     }

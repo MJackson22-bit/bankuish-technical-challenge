@@ -23,6 +23,8 @@ fun NavGraphBuilder.githubRepoDetails(navController: NavHostController) {
         GithubRepoDetailsView(
             state = viewModel.state,
             onEvent = viewModel::onEvent
-        )
+        ) {
+            navController.popBackStack()
+        }
     }
 }

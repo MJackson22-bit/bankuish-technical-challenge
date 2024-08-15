@@ -1,7 +1,7 @@
 package com.example.bankuish_technical_challenge.ui.modules.githubRepoDetails.view
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,17 +42,16 @@ import com.example.bankuish_technical_challenge.ui.modules.githubRepoDetails.Git
 import com.example.bankuish_technical_challenge.ui.modules.githubRepoDetails.GithubRepoDetailsState
 import com.example.bankuish_technical_challenge.ui.theme.BtcDarkTextColor
 import com.example.bankuish_technical_challenge.ui.theme.BtcGrayBackground
-import com.example.bankuish_technical_challenge.utils.helpers.getFormattedDate
-import com.example.bankuish_technical_challenge.utils.helpers.mtcLightText
-import com.example.bankuish_technical_challenge.utils.helpers.mtcText
+import com.example.bankuish_technical_challenge.utils.helpers.btcLightText
+import com.example.bankuish_technical_challenge.utils.helpers.btcText
 import kotlinx.coroutines.launch
-import java.util.Date
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun GithubRepoDetailsView(
     state: GithubRepoDetailsState,
-    onEvent: (GithubRepoDetailsEvent) -> Unit
+    onEvent: (GithubRepoDetailsEvent) -> Unit,
+    onBack: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -77,6 +76,23 @@ fun GithubRepoDetailsView(
                 shimmer = GithubReposShimmer
             ) {
 
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable {
+                                onBack()
+                            },
+                        painter = painterResource(id = R.drawable.ic_arrow_left),
+                        tint = BtcDarkTextColor,
+                        contentDescription = null
+                    )
+                }
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -100,14 +116,14 @@ fun GithubRepoDetailsView(
 
                     Text(
                         text = state.repo.fullName,
-                        style = TextStyle.mtcText(16.sp)
+                        style = TextStyle.btcText(16.sp)
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Text(
                         text = state.repo.description,
-                        style = TextStyle.mtcText(16.sp)
+                        style = TextStyle.btcText(16.sp)
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -132,7 +148,7 @@ fun GithubRepoDetailsView(
 
                             Text(
                                 text = "${state.repo.stargazersCount} stars",
-                                style = TextStyle.mtcLightText(16.sp)
+                                style = TextStyle.btcLightText(16.sp)
                             )
                         }
 
@@ -154,7 +170,7 @@ fun GithubRepoDetailsView(
 
                             Text(
                                 text = "${state.repo.stargazersCount} forks",
-                                style = TextStyle.mtcLightText(16.sp)
+                                style = TextStyle.btcLightText(16.sp)
                             )
                         }
 
@@ -179,12 +195,12 @@ fun GithubRepoDetailsView(
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
                                 text = "Issues",
-                                style = TextStyle.mtcText(14.sp)
+                                style = TextStyle.btcText(14.sp)
                             )
                         }
                         Text(
                             text = state.repo.openIssuesCount.toString(),
-                            style = TextStyle.mtcLightText(16.sp)
+                            style = TextStyle.btcLightText(16.sp)
                         )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
@@ -206,13 +222,13 @@ fun GithubRepoDetailsView(
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
                                 text = "Watchers",
-                                style = TextStyle.mtcText(14.sp)
+                                style = TextStyle.btcText(14.sp)
                             )
                         }
 
                         Text(
                             text = state.repo.watchers.toString(),
-                            style = TextStyle.mtcLightText(16.sp)
+                            style = TextStyle.btcLightText(16.sp)
                         )
                     }
 
@@ -235,13 +251,13 @@ fun GithubRepoDetailsView(
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
                                 text = "License",
-                                style = TextStyle.mtcText(14.sp)
+                                style = TextStyle.btcText(14.sp)
                             )
                         }
 
                         Text(
                             text = state.repo.licence.name,
-                            style = TextStyle.mtcLightText(16.sp)
+                            style = TextStyle.btcLightText(16.sp)
                         )
                     }
 
@@ -266,13 +282,13 @@ fun GithubRepoDetailsView(
 
                             Text(
                                 text = "Default branch",
-                                style = TextStyle.mtcText(14.sp)
+                                style = TextStyle.btcText(14.sp)
                             )
                         }
 
                         Text(
                             text = state.repo.defaultBranch,
-                            style = TextStyle.mtcLightText(16.sp)
+                            style = TextStyle.btcLightText(16.sp)
                         )
                     }
 
@@ -297,13 +313,13 @@ fun GithubRepoDetailsView(
 
                             Text(
                                 text = "Language",
-                                style = TextStyle.mtcText(14.sp)
+                                style = TextStyle.btcText(14.sp)
                             )
                         }
 
                         Text(
                             text = state.repo.language,
-                            style = TextStyle.mtcLightText(16.sp)
+                            style = TextStyle.btcLightText(16.sp)
                         )
                     }
 
@@ -342,6 +358,8 @@ fun GithubRepoDetailsViewPreview() {
                     )
                 )
             )
-        )
-    ) { }
+        ),
+        onEvent = {},
+        onBack = {}
+    )
 }
