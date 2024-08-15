@@ -1,5 +1,6 @@
 package com.example.bankuish_technical_challenge.ui.modules.githubRepos.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -30,6 +31,11 @@ class GithubReposViewModel(
                     isRefreshing = true
                 )
                 getGithubRepos(event.query)
+            }
+
+            is GithubReposEvent.DidTapRepo -> {
+                // Go to detail screen
+                Log.i("GithubReposViewModel", "DidTapRepo: ${event.githubRepoItemEntity}")
             }
         }
     }

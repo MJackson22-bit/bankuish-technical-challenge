@@ -12,35 +12,28 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.bankuish_technical_challenge.core.di.viewModelModule
 import com.example.bankuish_technical_challenge.domain.entity.githubRepo.GithubRepoItemEntity
 import com.example.bankuish_technical_challenge.ui.components.BTCRefreshableList
-import com.example.bankuish_technical_challenge.ui.components.BTCScrollableView
 import com.example.bankuish_technical_challenge.ui.components.BTCShimmeryView
 import com.example.bankuish_technical_challenge.ui.components.loading.GithubReposShimmer
 import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubReposEvent
 import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubReposState
-import com.example.bankuish_technical_challenge.ui.modules.githubRepos.viewmodel.GithubReposViewModel
-import com.example.bankuish_technical_challenge.ui.theme.BtcDarkBackground
 import com.example.bankuish_technical_challenge.ui.theme.BtcGrayBackground
 import com.example.bankuish_technical_challenge.ui.theme.BtcLightGrayTextColor
-import com.example.bankuish_technical_challenge.ui.theme.BtcShadowColor
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.KoinApplication
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun GithubReposView(
     state: GithubReposState,
-    onEvent: (GithubReposEvent) -> Unit
+    onEvent: (GithubReposEvent) -> Unit,
+    onNavigateToDetail: (String, String) -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -66,7 +59,7 @@ fun GithubReposView(
             ) {
                 LazyColumn {
                     items(state.repos) {
-                        GithubRepoCellView(it)
+                        GithubRepoCellView(it, onNavigateToDetail)
 
                         // Handle pagination
                         if(it == state.repos.last() && !state.isLoading) {
@@ -100,6 +93,8 @@ fun GithubReposViewPreview() {
                 GithubRepoItemEntity(null),
                 GithubRepoItemEntity(null)
             )
-        )
-    ) { }
+        ),
+        onEvent = {},
+        onNavigateToDetail = { _, _ -> }
+    )
 }

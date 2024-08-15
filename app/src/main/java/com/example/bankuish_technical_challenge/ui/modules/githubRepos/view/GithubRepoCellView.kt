@@ -1,6 +1,7 @@
 package com.example.bankuish_technical_challenge.ui.modules.githubRepos.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import coil.compose.AsyncImage
 import com.example.bankuish_technical_challenge.R
 import com.example.bankuish_technical_challenge.domain.entity.githubRepo.GithubRepoItemEntity
 import com.example.bankuish_technical_challenge.domain.entity.githubRepo.GithubRepoOwnerEntity
+import com.example.bankuish_technical_challenge.ui.modules.githubRepos.GithubReposEvent
 import com.example.bankuish_technical_challenge.ui.theme.BtcDarkBackground
 import com.example.bankuish_technical_challenge.utils.helpers.mtcLightText
 import com.example.bankuish_technical_challenge.utils.helpers.mtcText
@@ -35,7 +37,8 @@ import com.example.bankuish_technical_challenge.utils.helpers.shadow
 
 @Composable
 fun GithubRepoCellView(
-    item: GithubRepoItemEntity
+    item: GithubRepoItemEntity,
+    onNavigateToDetail: (String, String) -> Unit
 ) {
     Box(
         contentAlignment = Alignment.CenterEnd
@@ -43,7 +46,10 @@ fun GithubRepoCellView(
         Card(
             modifier = Modifier
                 .padding(vertical = 4.dp, horizontal = 6.dp)
-                .shadow(0f, offsetY = 2.dp),
+                .shadow(0f, offsetY = 2.dp)
+                .clickable {
+                    onNavigateToDetail(item.owner.login, item.name)
+                },
             colors = CardDefaults.cardColors(containerColor = BtcDarkBackground),
         ) {
             Column(
@@ -115,14 +121,16 @@ fun GithubRepoCellView(
 @Preview
 @Composable
 fun GithubRepoCellViewPreview() {
-    GithubRepoCellView(GithubRepoItemEntity(
-        id = 1,
-        name = "name",
-        fullName = "fullName",
-        owner = GithubRepoOwnerEntity(
-            login = "login",
+    GithubRepoCellView(
+        GithubRepoItemEntity(
             id = 1,
-            avatarUrl = "avatarUrl"
+            name = "name",
+            fullName = "fullName",
+            owner = GithubRepoOwnerEntity(
+                login = "login",
+                id = 1,
+                avatarUrl = "avatarUrl"
+            )
         )
-    ))
+    ) { _, _ -> }
 }

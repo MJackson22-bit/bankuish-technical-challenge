@@ -15,6 +15,11 @@ fun NavGraphBuilder.githubRepos(navController: NavHostController) {
         GithubReposView(
             state = viewModel.state,
             onEvent = viewModel::onEvent
-        )
+        ) { owner, repo ->
+            navController.navigate(AppTransition.GithubRepoDetailsScreen.passId(
+                ownerId = owner,
+                repoId = repo
+            ))
+        }
     }
 }
