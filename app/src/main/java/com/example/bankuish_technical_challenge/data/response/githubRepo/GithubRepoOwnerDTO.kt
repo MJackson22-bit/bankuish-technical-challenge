@@ -7,5 +7,6 @@ import kotlinx.serialization.Serializable
 data class GithubRepoOwnerDTO(
     @SerialName("id") val id: Int?,
     @SerialName("login") val login: String?,
-    @SerialName("avatar_url") val avatarUrl: String?
+    @SerialName("avatar_url") val avatarUrl: String?,
+    @SerialName("type") val type: String?
 )

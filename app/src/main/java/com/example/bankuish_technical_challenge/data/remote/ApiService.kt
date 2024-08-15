@@ -12,4 +12,9 @@ class ApiService(
         perPage: Int,
         page: Int
     ) = httpClient.get("search/repositories?q=$query&per_page=$perPage&page=$page")
+
+    suspend fun getGithubRepoDetails(
+        repoName: String,
+        repoOwner: String
+    ) = httpClient.get("repos/${repoOwner}/${repoName}")
 }

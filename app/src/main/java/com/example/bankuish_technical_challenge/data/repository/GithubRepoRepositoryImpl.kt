@@ -2,8 +2,10 @@ package com.example.bankuish_technical_challenge.data.repository
 
 import com.example.bankuish_technical_challenge.data.ApiResponse
 import com.example.bankuish_technical_challenge.data.remote.ApiService
+import com.example.bankuish_technical_challenge.data.response.githubRepo.GithubRepoItemDTO
 import com.example.bankuish_technical_challenge.data.response.githubRepo.GithubRepoResponseDTO
 import com.example.bankuish_technical_challenge.domain.entity.githubRepo.GithubRepoEntity
+import com.example.bankuish_technical_challenge.domain.entity.githubRepo.GithubRepoItemEntity
 import com.example.bankuish_technical_challenge.domain.repository.IGithubRepoRepository
 import io.ktor.client.call.body
 
@@ -22,6 +24,19 @@ class GithubRepoRepositoryImpl(
         return if (response.status.value in 200..299) {
             val data = response.body<GithubRepoResponseDTO?>()
             ApiResponse.Success(GithubRepoEntity(data))
+        } else {
+            ApiResponse.Error("Internal Server Error")
+        }
+    }
+
+    override suspend fun getGithubRepoDetails(
+        owner: String,
+        repo: String
+    ): ApiResponse<GithubRepoItemEntity> {
+        val response = apiService.getGithubRepoDetails(owner, repo)
+        return if (response.status.value in 200..299) {
+            val data = response.body<GithubRepoItemDTO>()
+            ApiResponse.Success(GithubRepoItemEntity(data))
         } else {
             ApiResponse.Error("Internal Server Error")
         }

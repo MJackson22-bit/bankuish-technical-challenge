@@ -122,15 +122,6 @@ fun GithubRepoCellView(
 @Composable
 fun GithubRepoCellViewPreview() {
     GithubRepoCellView(
-        GithubRepoItemEntity(
-            id = 1,
-            name = "name",
-            fullName = "fullName",
-            owner = GithubRepoOwnerEntity(
-                login = "login",
-                id = 1,
-                avatarUrl = "avatarUrl"
-            )
-        )
+        GithubRepoItemEntity(null)
     ) { _, _ -> }
 }
