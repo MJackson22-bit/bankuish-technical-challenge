@@ -37,7 +37,7 @@ import com.example.bankuish_technical_challenge.data.response.githubRepo.GithubR
 import com.example.bankuish_technical_challenge.domain.entity.githubRepo.GithubRepoItemEntity
 import com.example.bankuish_technical_challenge.ui.components.BTCRefreshableList
 import com.example.bankuish_technical_challenge.ui.components.BTCShimmeryView
-import com.example.bankuish_technical_challenge.ui.components.loading.GithubReposShimmer
+import com.example.bankuish_technical_challenge.ui.components.loading.GithubRepoDetailsShimmer
 import com.example.bankuish_technical_challenge.ui.modules.githubRepoDetails.GithubRepoDetailsEvent
 import com.example.bankuish_technical_challenge.ui.modules.githubRepoDetails.GithubRepoDetailsState
 import com.example.bankuish_technical_challenge.ui.theme.BtcDarkTextColor
@@ -73,7 +73,7 @@ fun GithubRepoDetailsView(
 
             BTCShimmeryView(
                 key = state.showShimmer,
-                shimmer = GithubReposShimmer
+                shimmer = GithubRepoDetailsShimmer
             ) {
 
                 Row(
