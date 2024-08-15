@@ -108,7 +108,7 @@ fun GithubRepoDetailsView(
                         error = painterResource(id = R.drawable.ic_person),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .size(80.dp)
+                            .size(90.dp)
                             .clip(CircleShape)
                     )
 
@@ -178,150 +178,23 @@ fun GithubRepoDetailsView(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_bug_report),
-                                contentDescription = null,
-                                tint = BtcDarkTextColor,
-                                modifier = Modifier.size(24.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = "Issues",
-                                style = TextStyle.btcText(14.sp)
-                            )
-                        }
-                        Text(
-                            text = state.repo.openIssuesCount.toString(),
-                            style = TextStyle.btcLightText(16.sp)
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_eye),
-                                contentDescription = null,
-                                tint = BtcDarkTextColor,
-                                modifier = Modifier.size(24.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = "Watchers",
-                                style = TextStyle.btcText(14.sp)
-                            )
-                        }
-
-                        Text(
-                            text = state.repo.watchers.toString(),
-                            style = TextStyle.btcLightText(16.sp)
-                        )
-                    }
+                    ItemGithubRepoDetails(icon = R.drawable.ic_bug_report, title = "Issues", value = state.repo.openIssuesCount.toString())
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_license),
-                                contentDescription = null,
-                                tint = BtcDarkTextColor,
-                                modifier = Modifier.size(24.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = "License",
-                                style = TextStyle.btcText(14.sp)
-                            )
-                        }
-
-                        Text(
-                            text = state.repo.licence.name,
-                            style = TextStyle.btcLightText(16.sp)
-                        )
-                    }
+                    ItemGithubRepoDetails(icon = R.drawable.ic_eye, title = "Watchers", value = state.repo.watchers.toString())
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_git_branch),
-                                contentDescription = null,
-                                tint = BtcDarkTextColor,
-                                modifier = Modifier.size(24.dp)
-                            )
-
-                            Spacer(modifier = Modifier.width(6.dp))
-
-                            Text(
-                                text = "Default branch",
-                                style = TextStyle.btcText(14.sp)
-                            )
-                        }
-
-                        Text(
-                            text = state.repo.defaultBranch,
-                            style = TextStyle.btcLightText(16.sp)
-                        )
-                    }
+                    ItemGithubRepoDetails(icon = R.drawable.ic_license, title = "License", value = state.repo.licence.name)
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_code),
-                                contentDescription = null,
-                                tint = BtcDarkTextColor,
-                                modifier = Modifier.size(24.dp)
-                            )
+                    ItemGithubRepoDetails(icon = R.drawable.ic_git_branch, title = "Default branch", value = state.repo.defaultBranch)
 
-                            Spacer(modifier = Modifier.width(6.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
-                            Text(
-                                text = "Language",
-                                style = TextStyle.btcText(14.sp)
-                            )
-                        }
-
-                        Text(
-                            text = state.repo.language,
-                            style = TextStyle.btcLightText(16.sp)
-                        )
-                    }
+                    ItemGithubRepoDetails(icon = R.drawable.ic_code, title = "Language", value = state.repo.language)
 
                     Spacer(modifier = Modifier.height(20.dp))
                 }
@@ -329,6 +202,44 @@ fun GithubRepoDetailsView(
             }
         }
     }
+}
+
+@Composable
+fun ItemGithubRepoDetails(
+    icon: Int,
+    title: String,
+    value: String
+) {
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                tint = BtcDarkTextColor,
+                modifier = Modifier.size(24.dp)
+            )
+
+            Spacer(modifier = Modifier.width(6.dp))
+
+            Text(
+                text = title,
+                style = TextStyle.btcText(14.sp)
+            )
+        }
+
+        Text(
+            text = value,
+            style = TextStyle.btcLightText(16.sp)
+        )
+    }
+
 }
 
 @Composable
